@@ -1,0 +1,40 @@
+--Databasesikkerhed--
+
+	SQL Injections kan forebygges på følgende måder:
+	
+	a) -Prepared Statements / parameterized statements-
+	Prepared statements ved queries hvor user inputs danner basis for dataen sendt / hentet,
+	feks. ved inserts med information fra en form. Prepared statements sender query og data seperat,
+	hvor DBMS bliver forberedt på hvilken specifik type data der skal udfylde de tommer plads (?) i query,
+	og hvor. Eks i pseudo:
+	
+		var sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+		var stmt = connection -> prepare statement(sql)
+		stmt -> bind_parameters("String", "INT", String username, int password);
+	
+	Denne prepared query binder parameterne ?, ? til typen String og int med værdierne fra username og password
+	variablene. Hvis der så bliver sendt malicious streng i username input, vil den gå igennem som String men vil tage form som
+	en værdi, og derfor ikke blive udført som query.
+
+	b) -Formatting og sanitizing-
+	Oveni prepared statements kan man bruge formatting og sanitizing af input fields til ens SQL queries, og sørge for at
+	visse special characters fra UTF-8 brugt til scripting ikke medtages eller udskiftes. Det kunne f.eks. være "%" som kan bruges
+	til at indsætte et php script i en HTTP get request på en webpage (cross-site scripting), eller "*" "(" ")" "/" som kan bruges til
+ 	SELECT query.
+
+	c) Stored procedures, hvor query er gemt på forhånd på database niveau. Men det kræver god formatting, ellers vil man være ligeså
+	udsat som ved normale SQL procedure da vi stadig har med user inputs at gøre. Samtidigt skal den opbygges på samme måde som para-
+	meterized statements, da en concatenated String med user inputs vil være udsat for samme fejl. Procedure og værdier skal existere
+	seperat! Det kunne f.eks. se således ud:
+
+		CREATE PROCEDURE VerifyLogin
+    		@username varchar(50), 
+    		@password varchar(50) 
+		AS 
+		BEGIN 
+    		SELECT * FROM users WHERE UserName = @username AND Password = @password; 
+		END 
+		GO
+
+	Pga store procedures mister deres værdi hvis de opbygges dynamisk, er de sjældent særligt brugbare i en webudviklingssammenhæng,
+	hvor de netop ikke tilbyder noget prepared statements ikke kan løse.

@@ -1,0 +1,13 @@
+--Brugerdata i databasen--
+	Kryptering af passwords og evt usernames er en mulighed for at sikre at følsomt data bliver lagret ulæseligt uden "specielle"
+	kompetencer.
+
+	Password hash funktioner (f.eks. password_hash fra php) er ikke direkte kryptografiske funktioner, men natively indeholder de fleste APIer til webudvikling, 
+	muligheder for at hashe Strings til at gemme følsomt data i. Hashing er basically en one-way enkryptering, da det ikke skal dekrypteres.
+	
+	Hashing funktioner tager normalt to inputs nemlig password og salt String. Salten er random genereret når brugeren vælger password og gemt
+	sammen med det hashede password. Når man henter dataen fra database igen ved f.eks. login læser en verify funktion det indtastede password for at sikre et hashing match.
+
+	Det skaber en dobbelt sikkerhed ved både salting og hashing af Strings, idet begge ting skal løses. Selv hvis den "hat" der sidder og hygger sig, får løst det ene element, 
+	vil det andet stadig besværliggøre læseligheden substantielt. Hvis man f.eks. får genkendt en hashing med en specifik rainbow table, kan saltet altså stadig redde ens String
+	ved at gøre den ulæselig.
