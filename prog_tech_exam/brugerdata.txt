@@ -8,6 +8,14 @@
 	Hashing funktioner tager normalt to inputs nemlig password og salt String. Salten er random genereret når brugeren vælger password og gemt
 	sammen med det hashede password. Når man henter dataen fra database igen ved f.eks. login læser en verify funktion det indtastede password for at sikre et hashing match.
 
+		-Eksempel med SHA-512 algoritme-
+		Plaintext password: HorseStapler+5
+		Salt: 'BohpaS.aul0Qua/t'.
+		Plain text+salt: 'HorseStapler+5BohpaS.aul0Qua/t'
+		Hashing: 'IVUen1dSKZ634jM.KLQ1Am/WPh..DSO2MYI53qffac2IFzESKwIufyVjzQGlxNenOXGehMTCdSoL9DLPe6Zfm1'
+		Salt + hashing til verification: '$6$BohpaS.aul0Qua/t$IVUen1dSKZ634jM.KLQ1Am/WPh..DSO2MYI53qffac2IFzESKwIufyVjzQGlxNenOXGehMTCdSoL9DLPe6Zfm1'
+
+
 	Det skaber en dobbelt sikkerhed ved både salting og hashing af Strings, idet begge ting skal løses. Selv hvis den "hat" der sidder og hygger sig, får løst det ene element, 
 	vil det andet stadig besværliggøre læseligheden substantielt. Hvis man f.eks. får genkendt en hashing med en specifik rainbow table, kan saltet altså stadig redde ens String
 	ved at gøre den ulæselig.

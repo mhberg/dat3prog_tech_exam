@@ -1,0 +1,13 @@
+OPG 10. Link til github: 
+	
+	https://github.com/mhberg/dat3prog_tech_exam/
+
+
+OPG 11. Link til Google Cloud Upload:
+
+	https://examupload-189011.appspot.com/index.php
+
+	!NOTE! Filerne findes på clouden, men jeg har endnu ikke fundet løsningen på 404'eren på trods af filerne ligger der.
+	Jeg har en anelse om, at det handler om en twist i yaml-configurationen.
+
+	
